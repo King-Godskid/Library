@@ -2,6 +2,7 @@ import { Suspense } from "react";
 import { sql } from "@/db";
 import AddBookForm from "./AddBookForm";
 import BookCard from "./BookCard";
+import Nav from "./Nav";
 
 async function BookList() {
   const books = await sql`
@@ -41,6 +42,7 @@ async function BookList() {
 export default function Home() {
   return (
     <main className="mx-auto max-w-2xl p-6">
+      <Nav />
       <h1 className="mb-6 text-2xl font-bold">Library</h1>
       <AddBookForm />
       <Suspense fallback={<p>Loading books...</p>}>
