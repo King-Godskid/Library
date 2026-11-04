@@ -2,6 +2,7 @@
 
 import { useState, useActionState } from "react";
 import { deleteBook, updateBook, type FormState } from "./actions";
+import { lendBook, returnBook, type LoanFormState } from "./loan-actions";
 
 type Book = {
   id: number;
@@ -12,9 +13,18 @@ type Book = {
   due_on: string | null;
 };
 
-const initial: FormState = { ok: false, message: "" };
+type Member = { id: number; name: string };
 
-export default function BookCard({ book }: { book: Book }) {
+const initial: FormState = { ok: false, message: "" };
+const initialLoan: LoanFormState = { ok: false, message: "" };
+
+export default function BookCard({
+  book,
+  members,
+}: {
+  book: Book;
+  members: Member[];
+}) {
   const [editing, setEditing] = useState(false);
 
   const [updateState, updateAction, updating] = useActionState(
@@ -29,6 +39,14 @@ export default function BookCard({ book }: { book: Book }) {
   const [deleteState, deleteAction, deleting] = useActionState(
     deleteBook,
     initial
+  );
+  const [lendState, lendAction, lending] = useActionState(
+    lendBook,
+    initialLoan
+  );
+  const [returnState, returnAction, returning] = useActionState(
+    returnBook,
+    initialLoan
   );
 
   if (editing) {
@@ -94,6 +112,49 @@ export default function BookCard({ book }: { book: Book }) {
           ? `On loan to ${book.borrower}, due ${book.due_on}`
           : "Available"}
       </p>
+
+      {book.borrower ? (
+        <form action={returnAction} className="mt-3">
+          <input type="hidden" name="bookId" value={book.id} />
+          <button
+            type="submit"
+            disabled={returning}
+            className="rounded bg-green-700 px-3 py-1 text-sm text-white disabled:opacity-50"
+          >
+            {returning ? "Saving..." : "Record return"}
+          </button>
+        </form>
+      ) : (
+        <form action={lendAction} className="mt-3 flex flex-wrap gap-2">
+          <input type="hidden" name="bookId" value={book.id} />
+          <select
+            name="memberId"
+            defaultValue=""
+            className="rounded border p-1 text-sm"
+          >
+            <option value="">Choose member</option>
+            {members.map((member) => (
+              <option key={member.id} value={member.id}>
+                {member.name}
+              </option>
+            ))}
+          </select>
+          <button
+            type="submit"
+            disabled={lending}
+            className="rounded bg-black px-3 py-1 text-sm text-white disabled:opacity-50"
+          >
+            {lending ? "Saving..." : "Lend for 14 days"}
+          </button>
+        </form>
+      )}
+
+      {lendState.message && !lendState.ok && (
+        <p className="mt-2 text-sm text-red-600">{lendState.message}</p>
+      )}
+      {returnState.message && !returnState.ok && (
+        <p className="mt-2 text-sm text-red-600">{returnState.message}</p>
+      )}
 
       <div className="mt-3 flex gap-2">
         <button

@@ -20,11 +20,17 @@ async function BookList() {
     order by books.title
   `;
 
+  const memberRows = await sql`
+    select id, name from members order by name
+  `;
+  const members = memberRows.map((m) => ({ id: m.id, name: m.name }));
+
   return (
     <ul className="space-y-3">
       {books.map((book) => (
         <BookCard
           key={book.id}
+          members={members}
           book={{
             id: book.id,
             title: book.title,
