@@ -1,6 +1,7 @@
 import { Suspense } from "react";
 import { sql } from "@/db";
 import AddBookForm from "./AddBookForm";
+import BookCard from "./BookCard";
 
 async function BookList() {
   const books = await sql`
@@ -21,24 +22,17 @@ async function BookList() {
   return (
     <ul className="space-y-3">
       {books.map((book) => (
-        <li key={book.id} className="rounded-lg border p-4">
-          <p className="font-semibold">
-            {book.title}
-            {book.year ? ` (${book.year})` : ""}
-          </p>
-          <p className="text-sm text-gray-600">by {book.author}</p>
-          <p
-            className={
-              book.borrower
-                ? "text-sm text-red-600"
-                : "text-sm text-green-600"
-            }
-          >
-            {book.borrower
-              ? `On loan to ${book.borrower}, due ${book.due_on}`
-              : "Available"}
-          </p>
-        </li>
+        <BookCard
+          key={book.id}
+          book={{
+            id: book.id,
+            title: book.title,
+            year: book.year,
+            author: book.author,
+            borrower: book.borrower,
+            due_on: book.due_on,
+          }}
+        />
       ))}
     </ul>
   );
