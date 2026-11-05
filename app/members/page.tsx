@@ -25,13 +25,15 @@ export default function MembersPage() {
   return (
     <main className="mx-auto w-full max-w-2xl px-4 py-8 sm:px-6 sm:py-10">
       <Nav />
-      <h1 className="mb-7 text-3xl font-bold tracking-tight text-slate-800">
+      <h1 className="mb-7 text-3xl font-bold tracking-tight text-blue-950 dark:text-slate-100">
         Members
       </h1>
       <AddMemberForm />
       <Suspense
         fallback={
-          <p className="py-4 text-sm text-slate-600">Loading members...</p>
+          <p className="py-4 text-sm text-slate-600 dark:text-slate-300">
+            Loading members...
+          </p>
         }
       >
         <MemberList />

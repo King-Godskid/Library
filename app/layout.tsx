@@ -22,8 +22,18 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
     <html
       lang="en"
       className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
+      suppressHydrationWarning
     >
-      <body className="min-h-full flex flex-col">{children}</body>
+      <head>
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `(function(){var theme=null;try{theme=localStorage.getItem("theme")}catch{}var dark=theme==="dark"||(theme!=="light"&&window.matchMedia("(prefers-color-scheme: dark)").matches);document.documentElement.classList.toggle("dark",dark)})()`,
+          }}
+        />
+      </head>
+      <body className="flex min-h-screen flex-col bg-gradient-to-br from-[#fffdf7] via-[#f4f7fc] to-[#e6eefb] text-slate-900 transition-colors duration-300 dark:from-slate-950 dark:via-blue-950 dark:to-indigo-950 dark:text-slate-100">
+        {children}
+      </body>
     </html>
   );
 }
