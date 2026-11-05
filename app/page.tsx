@@ -12,7 +12,8 @@ async function BookList() {
       books.year,
       authors.name as author,
       members.name as borrower,
-      to_char(loans.due_on, 'DD Mon YYYY') as due_on
+      to_char(loans.due_on, 'DD Mon YYYY') as due_on,
+      to_char(loans.borrowed_on, 'DD Mon YYYY') as borrowed_on
     from books
     join authors on authors.id = books.author_id
     left join loans on loans.book_id = books.id and loans.returned_on is null
@@ -38,6 +39,7 @@ async function BookList() {
             author: book.author,
             borrower: book.borrower,
             due_on: book.due_on,
+            borrowed_on: book.borrowed_on,
           }}
         />
       ))}

@@ -12,6 +12,7 @@ type Book = {
   author: string;
   borrower: string | null;
   due_on: string | null;
+  borrowed_on: string | null;
 };
 
 type Member = { id: number; name: string };
@@ -117,6 +118,25 @@ export default function BookCard({
             </span>
           )}
       </p>
+      {book.borrower && book.borrowed_on && (
+        <p className="mt-2 inline-flex items-center gap-1.5 rounded-lg bg-white/90 px-2.5 py-1 text-xs text-slate-600 dark:bg-slate-800/80 dark:text-slate-300">
+          <svg
+            aria-hidden="true"
+            viewBox="0 0 16 16"
+            fill="none"
+            stroke="currentColor"
+            strokeWidth="1.4"
+            className="h-3.5 w-3.5"
+          >
+            <rect x="2.25" y="3.5" width="11.5" height="10" rx="1.5" />
+            <path
+              strokeLinecap="round"
+              d="M5 2v3M11 2v3M2.5 6.5h11"
+            />
+          </svg>
+          Lent on {book.borrowed_on}
+        </p>
+      )}
 
       {book.borrower ? (
         <form action={returnAction} className="mt-3">
@@ -124,9 +144,29 @@ export default function BookCard({
           <button
             type="submit"
             disabled={returning}
-            className="min-h-10 rounded-xl bg-gradient-to-r from-violet-600 to-purple-600 px-4 py-2 text-sm font-semibold text-white shadow-[0_8px_18px_rgba(124,58,237,0.28)] transition duration-200 hover:-translate-y-0.5 hover:from-violet-500 hover:to-purple-500 hover:shadow-[0_12px_24px_rgba(124,58,237,0.4)] active:scale-95 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-violet-300 focus-visible:ring-offset-2 focus-visible:ring-offset-blue-900 disabled:cursor-not-allowed disabled:opacity-50"
+            className="min-h-10 rounded-xl bg-gradient-to-r from-violet-600 to-purple-600 px-4 py-2 text-sm font-semibold text-white shadow-[0_6px_14px_rgba(124,58,237,0.2)] transition duration-200 hover:-translate-y-0.5 hover:from-violet-500 hover:to-purple-500 hover:shadow-[0_8px_18px_rgba(124,58,237,0.28)] active:scale-95 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-violet-300 focus-visible:ring-offset-2 focus-visible:ring-offset-blue-900 disabled:cursor-not-allowed disabled:opacity-50"
           >
-            {returning ? "Saving..." : "Record return"}
+            {returning ? (
+              "Saving..."
+            ) : (
+              <>
+                <svg
+                  aria-hidden="true"
+                  viewBox="0 0 20 20"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth="1.8"
+                  className="mr-1.5 inline-block h-4 w-4 align-[-3px]"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    d="M7 5 3.5 8.5 7 12M4 8.5h7a5 5 0 0 1 0 10h-1"
+                  />
+                </svg>
+                Record return
+              </>
+            )}
           </button>
         </form>
       ) : (
