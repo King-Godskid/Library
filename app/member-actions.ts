@@ -27,5 +27,6 @@ export async function addMember(
   `;
 
   revalidatePath("/members");
+  revalidatePath("/");
   return { ok: true, message: `${name} was added.` };
 }

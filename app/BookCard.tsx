@@ -3,6 +3,7 @@
 import { useState, useActionState } from "react";
 import { deleteBook, updateBook, type FormState } from "./actions";
 import { lendBook, returnBook, type LoanFormState } from "./loan-actions";
+import { useRouter } from "next/navigation";
 
 type Book = {
   id: number;
@@ -26,7 +27,7 @@ export default function BookCard({
   members: Member[];
 }) {
   const [editing, setEditing] = useState(false);
-
+  const router = useRouter();
   const [updateState, updateAction, updating] = useActionState(
     async (prev: FormState, formData: FormData) => {
       const result = await updateBook(prev, formData);
@@ -51,39 +52,39 @@ export default function BookCard({
 
   if (editing) {
     return (
-      <li className="rounded-lg border p-4">
+      <li className="rounded-xl border border-stone-200 bg-white/80 p-5 shadow-sm transition duration-200 hover:-translate-y-0.5 hover:border-teal-700 hover:shadow-md active:translate-y-0">
         <form action={updateAction} className="space-y-3">
           <input type="hidden" name="id" value={book.id} />
           <input
             name="title"
             placeholder="Title"
             defaultValue={updateState.values?.title ?? book.title}
-            className="w-full rounded border p-2"
+            className="min-h-11 w-full rounded-lg border border-stone-300 bg-white px-3 py-2 text-slate-800 placeholder:text-slate-500 transition-colors duration-200 hover:border-teal-700 focus-visible:border-teal-700 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-teal-700/40"
           />
           <input
             name="author"
             placeholder="Author"
             defaultValue={updateState.values?.author ?? book.author}
-            className="w-full rounded border p-2"
+            className="min-h-11 w-full rounded-lg border border-stone-300 bg-white px-3 py-2 text-slate-800 placeholder:text-slate-500 transition-colors duration-200 hover:border-teal-700 focus-visible:border-teal-700 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-teal-700/40"
           />
           <input
             name="year"
             placeholder="Year"
             defaultValue={updateState.values?.year ?? String(book.year ?? "")}
-            className="w-full rounded border p-2"
+            className="min-h-11 w-full rounded-lg border border-stone-300 bg-white px-3 py-2 text-slate-800 placeholder:text-slate-500 transition-colors duration-200 hover:border-teal-700 focus-visible:border-teal-700 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-teal-700/40"
           />
           <div className="flex gap-2">
             <button
               type="submit"
               disabled={updating}
-              className="rounded bg-black px-4 py-2 text-white disabled:opacity-50"
+              className="min-h-10 rounded-lg bg-teal-800 px-4 py-2 font-semibold text-white shadow-sm transition duration-150 hover:-translate-y-0.5 hover:bg-teal-900 active:translate-y-0 active:scale-[0.98] active:bg-teal-900 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-teal-700 focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 disabled:hover:translate-y-0"
             >
               {updating ? "Saving..." : "Save"}
             </button>
             <button
               type="button"
               onClick={() => setEditing(false)}
-              className="rounded border px-4 py-2"
+              className="min-h-10 rounded-lg border border-stone-300 bg-white px-4 py-2 font-medium text-slate-700 transition duration-150 hover:border-stone-400 hover:bg-stone-100 active:bg-stone-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-teal-700 focus-visible:ring-offset-2"
             >
               Cancel
             </button>
@@ -97,20 +98,24 @@ export default function BookCard({
   }
 
   return (
-    <li className="rounded-lg border p-4">
-      <p className="font-semibold">
+    <li className="rounded-xl border border-stone-200 bg-white/80 p-5 shadow-sm transition duration-200 hover:-translate-y-0.5 hover:border-teal-700 hover:shadow-md active:translate-y-0">
+      <p className="font-semibold text-slate-800">
         {book.title}
         {book.year ? ` (${book.year})` : ""}
       </p>
-      <p className="text-sm text-gray-600">by {book.author}</p>
-      <p
-        className={
-          book.borrower ? "text-sm text-red-600" : "text-sm text-green-600"
-        }
-      >
+      <p className="mt-1 text-sm text-slate-600">by {book.author}</p>
+      <p className="mt-2">
         {book.borrower
-          ? `On loan to ${book.borrower}, due ${book.due_on}`
-          : "Available"}
+          ? (
+            <span className="inline-block rounded-full bg-amber-100 px-3 py-1 text-sm font-semibold text-amber-900">
+              {`On loan to ${book.borrower}, due ${book.due_on}`}
+            </span>
+          )
+          : (
+            <span className="inline-block rounded-full bg-emerald-100 px-3 py-1 text-sm font-bold text-emerald-800">
+              Available
+            </span>
+          )}
       </p>
 
       {book.borrower ? (
@@ -119,7 +124,7 @@ export default function BookCard({
           <button
             type="submit"
             disabled={returning}
-            className="rounded bg-green-700 px-3 py-1 text-sm text-white disabled:opacity-50"
+            className="min-h-10 rounded-lg bg-indigo-700 px-4 py-2 text-sm font-semibold text-white shadow-sm transition duration-150 hover:-translate-y-0.5 hover:bg-indigo-800 active:translate-y-0 active:scale-[0.98] active:bg-indigo-900 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-indigo-700 focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 disabled:hover:translate-y-0"
           >
             {returning ? "Saving..." : "Record return"}
           </button>
@@ -130,7 +135,13 @@ export default function BookCard({
           <select
             name="memberId"
             defaultValue=""
-            className="rounded border p-1 text-sm"
+            onChange={(e) => {
+  if (e.target.value === "__add__") {
+    e.target.value = "";
+    router.push("/members");
+  }
+}}
+            className="min-h-10 rounded-lg border border-stone-300 bg-white px-3 py-2 text-sm text-slate-700 transition-colors duration-200 hover:border-teal-700 focus-visible:border-teal-700 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-teal-700/40"
           >
             <option value="">Choose member</option>
             {members.map((member) => (
@@ -138,11 +149,12 @@ export default function BookCard({
                 {member.name}
               </option>
             ))}
+            <option value="__add__">+ Add a new member...</option>
           </select>
           <button
             type="submit"
             disabled={lending}
-            className="rounded bg-black px-3 py-1 text-sm text-white disabled:opacity-50"
+            className="min-h-10 rounded-lg bg-teal-800 px-4 py-2 text-sm font-semibold text-white shadow-sm transition duration-150 hover:-translate-y-0.5 hover:bg-teal-900 active:translate-y-0 active:scale-[0.98] active:bg-teal-900 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-teal-700 focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 disabled:hover:translate-y-0"
           >
             {lending ? "Saving..." : "Lend for 14 days"}
           </button>
@@ -156,11 +168,11 @@ export default function BookCard({
         <p className="mt-2 text-sm text-red-600">{returnState.message}</p>
       )}
 
-      <div className="mt-3 flex gap-2">
+      <div className="mt-4 flex flex-wrap gap-2">
         <button
           type="button"
           onClick={() => setEditing(true)}
-          className="rounded border px-3 py-1 text-sm"
+          className="min-h-10 rounded-lg border border-slate-400 px-4 py-2 text-sm font-medium text-slate-700 transition duration-150 hover:border-teal-700 hover:bg-teal-50 hover:text-teal-900 active:scale-[0.98] active:bg-teal-100 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-teal-700 focus-visible:ring-offset-2"
         >
           Edit
         </button>
@@ -174,7 +186,7 @@ export default function BookCard({
           <button
             type="submit"
             disabled={deleting}
-            className="rounded border border-red-600 px-3 py-1 text-sm text-red-600 disabled:opacity-50"
+            className="min-h-10 rounded-lg border border-red-700 px-4 py-2 text-sm font-medium text-red-700 transition duration-150 hover:bg-red-600 hover:text-white active:scale-[0.98] active:bg-red-700 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-red-600 focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
           >
             {deleting ? "Deleting..." : "Delete"}
           </button>

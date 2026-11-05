@@ -9,11 +9,14 @@ async function MemberList() {
   `;
 
   return (
-    <ul className="space-y-3">
+    <ul className="space-y-4">
       {members.map((member) => (
-        <li key={member.id} className="rounded-lg border p-4">
-          <p className="font-semibold">{member.name}</p>
-          <p className="text-sm text-gray-600">
+        <li
+          key={member.id}
+          className="rounded-xl border border-stone-200 bg-white/80 p-5 shadow-sm transition duration-200 hover:-translate-y-0.5 hover:border-teal-700 hover:shadow-md active:translate-y-0"
+        >
+          <p className="font-semibold text-slate-800">{member.name}</p>
+          <p className="mt-1 text-sm text-slate-600">
             {member.phone ? member.phone : "No phone number"}
           </p>
         </li>
@@ -24,11 +27,17 @@ async function MemberList() {
 
 export default function MembersPage() {
   return (
-    <main className="mx-auto max-w-2xl p-6">
+    <main className="mx-auto w-full max-w-2xl px-4 py-8 sm:px-6 sm:py-10">
       <Nav />
-      <h1 className="mb-6 text-2xl font-bold">Members</h1>
+      <h1 className="mb-7 text-3xl font-bold tracking-tight text-slate-800">
+        Members
+      </h1>
       <AddMemberForm />
-      <Suspense fallback={<p>Loading members...</p>}>
+      <Suspense
+        fallback={
+          <p className="py-4 text-sm text-slate-600">Loading members...</p>
+        }
+      >
         <MemberList />
       </Suspense>
     </main>

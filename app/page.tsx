@@ -26,7 +26,7 @@ async function BookList() {
   const members = memberRows.map((m) => ({ id: m.id, name: m.name }));
 
   return (
-    <ul className="space-y-3">
+    <ul className="space-y-4">
       {books.map((book) => (
         <BookCard
           key={book.id}
@@ -47,11 +47,15 @@ async function BookList() {
 
 export default function Home() {
   return (
-    <main className="mx-auto max-w-2xl p-6">
+    <main className="mx-auto w-full max-w-2xl px-4 py-8 sm:px-6 sm:py-10">
       <Nav />
-      <h1 className="mb-6 text-2xl font-bold">Library</h1>
+      <h1 className="mb-7 text-3xl font-bold tracking-tight text-slate-800">
+        Library
+      </h1>
       <AddBookForm />
-      <Suspense fallback={<p>Loading books...</p>}>
+      <Suspense
+        fallback={<p className="py-4 text-sm text-slate-600">Loading books...</p>}
+      >
         <BookList />
       </Suspense>
     </main>
