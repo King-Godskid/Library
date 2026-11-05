@@ -32,7 +32,7 @@ export default function MemberCard({ member }: { member: Member }) {
 
   if (editing) {
     return (
-      <li className="rounded-2xl border border-white/25 bg-gradient-to-br from-blue-900 via-blue-800 to-blue-700 p-5 text-white shadow-[0_16px_34px_rgba(15,45,82,0.22)] backdrop-blur-md transition duration-200 hover:-translate-y-1 hover:border-sky-300 hover:shadow-[0_20px_40px_rgba(15,45,82,0.32)] active:translate-y-0 dark:border-sky-400/20 dark:bg-slate-900/60 dark:bg-none">
+      <li className="rounded-2xl border border-white/25 bg-gradient-to-br from-blue-900 via-blue-800 to-blue-700 p-4 text-white shadow-[0_16px_34px_rgba(15,45,82,0.22)] backdrop-blur-md transition duration-200 hover:-translate-y-1 hover:border-sky-300 hover:shadow-[0_20px_40px_rgba(15,45,82,0.32)] active:translate-y-0 dark:border-sky-400/20 dark:bg-slate-900/60 dark:bg-none sm:p-5">
         <form action={updateAction} className="space-y-3">
           <input type="hidden" name="id" value={member.id} />
           <input
@@ -72,11 +72,11 @@ export default function MemberCard({ member }: { member: Member }) {
   }
 
   return (
-    <li className="rounded-2xl border border-white/25 bg-gradient-to-br from-blue-900 via-blue-800 to-blue-700 p-5 text-white shadow-[0_16px_34px_rgba(15,45,82,0.22)] backdrop-blur-md transition duration-200 hover:-translate-y-1 hover:border-sky-300 hover:shadow-[0_20px_40px_rgba(15,45,82,0.32)] active:translate-y-0 dark:border-sky-400/20 dark:bg-slate-900/60 dark:bg-none">
-      <p className="font-semibold text-white dark:text-slate-100">
+    <li className="rounded-2xl border border-white/25 bg-gradient-to-br from-blue-900 via-blue-800 to-blue-700 p-4 text-white shadow-[0_16px_34px_rgba(15,45,82,0.22)] backdrop-blur-md transition duration-200 hover:-translate-y-1 hover:border-sky-300 hover:shadow-[0_20px_40px_rgba(15,45,82,0.32)] active:translate-y-0 dark:border-sky-400/20 dark:bg-slate-900/60 dark:bg-none sm:p-5">
+      <p className="break-words font-semibold text-white dark:text-slate-100">
         {member.name}
       </p>
-      <p className="mt-1 text-sm text-blue-100/80">
+      <p className="mt-1 break-words text-sm text-blue-100/80">
         {member.phone ? member.phone : "No phone number"}
       </p>
 

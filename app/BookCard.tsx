@@ -53,7 +53,7 @@ export default function BookCard({
 
   if (editing) {
     return (
-      <li className="rounded-2xl border border-white/25 bg-gradient-to-br from-blue-900 via-blue-800 to-blue-700 p-5 text-white shadow-[0_16px_34px_rgba(15,45,82,0.22)] backdrop-blur-md transition duration-200 hover:-translate-y-1 hover:border-sky-300 hover:shadow-[0_20px_40px_rgba(15,45,82,0.32)] active:translate-y-0 dark:border-sky-400/20 dark:bg-slate-900/60 dark:bg-none">
+      <li className="rounded-2xl border border-white/25 bg-gradient-to-br from-blue-900 via-blue-800 to-blue-700 p-4 text-white shadow-[0_16px_34px_rgba(15,45,82,0.22)] backdrop-blur-md transition duration-200 hover:-translate-y-1 hover:border-sky-300 hover:shadow-[0_20px_40px_rgba(15,45,82,0.32)] active:translate-y-0 dark:border-sky-400/20 dark:bg-slate-900/60 dark:bg-none sm:p-5">
         <form action={updateAction} className="space-y-3">
           <input type="hidden" name="id" value={book.id} />
           <input
@@ -99,8 +99,8 @@ export default function BookCard({
   }
 
   return (
-    <li className="rounded-2xl border border-white/25 bg-gradient-to-br from-blue-900 via-blue-800 to-blue-700 p-5 text-white shadow-[0_16px_34px_rgba(15,45,82,0.22)] backdrop-blur-md transition duration-200 hover:-translate-y-1 hover:border-sky-300 hover:shadow-[0_20px_40px_rgba(15,45,82,0.32)] active:translate-y-0 dark:border-sky-400/20 dark:bg-slate-900/60 dark:bg-none">
-      <p className="font-semibold text-white dark:text-slate-100">
+    <li className="rounded-2xl border border-white/25 bg-gradient-to-br from-blue-900 via-blue-800 to-blue-700 p-4 text-white shadow-[0_16px_34px_rgba(15,45,82,0.22)] backdrop-blur-md transition duration-200 hover:-translate-y-1 hover:border-sky-300 hover:shadow-[0_20px_40px_rgba(15,45,82,0.32)] active:translate-y-0 dark:border-sky-400/20 dark:bg-slate-900/60 dark:bg-none sm:p-5">
+      <p className="break-words font-semibold text-white dark:text-slate-100">
         {book.title}
         {book.year ? ` (${book.year})` : ""}
       </p>
@@ -108,7 +108,7 @@ export default function BookCard({
       <p className="mt-2">
         {book.borrower
           ? (
-            <span className="inline-block rounded-full bg-amber-300 px-3 py-1 text-sm font-bold text-amber-950">
+            <span className="inline-block max-w-full whitespace-normal break-words rounded-full bg-amber-300 px-3 py-1 text-sm font-bold text-amber-950">
               {`On loan to ${book.borrower}, due ${book.due_on}`}
             </span>
           )
@@ -119,7 +119,7 @@ export default function BookCard({
           )}
       </p>
       {book.borrower && book.borrowed_on && (
-        <p className="mt-2 inline-flex items-center gap-1.5 rounded-lg bg-white/90 px-2.5 py-1 text-xs text-slate-600 dark:bg-slate-800/80 dark:text-slate-300">
+        <p className="mt-2 inline-flex max-w-full items-center gap-1.5 rounded-lg bg-white/90 px-2.5 py-1 text-xs text-slate-600 dark:bg-slate-800/80 dark:text-slate-300">
           <svg
             aria-hidden="true"
             viewBox="0 0 16 16"
@@ -144,7 +144,7 @@ export default function BookCard({
           <button
             type="submit"
             disabled={returning}
-            className="min-h-10 rounded-xl bg-gradient-to-r from-violet-600 to-purple-600 px-4 py-2 text-sm font-semibold text-white shadow-[0_6px_14px_rgba(124,58,237,0.2)] transition duration-200 hover:-translate-y-0.5 hover:from-violet-500 hover:to-purple-500 hover:shadow-[0_8px_18px_rgba(124,58,237,0.28)] active:scale-95 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-violet-300 focus-visible:ring-offset-2 focus-visible:ring-offset-blue-900 disabled:cursor-not-allowed disabled:opacity-50"
+            className="min-h-10 w-full rounded-xl bg-gradient-to-r from-violet-600 to-purple-600 px-4 py-2 text-sm font-semibold text-white shadow-[0_6px_14px_rgba(124,58,237,0.2)] transition duration-200 hover:-translate-y-0.5 hover:from-violet-500 hover:to-purple-500 hover:shadow-[0_8px_18px_rgba(124,58,237,0.28)] active:scale-95 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-violet-300 focus-visible:ring-offset-2 focus-visible:ring-offset-blue-900 disabled:cursor-not-allowed disabled:opacity-50 sm:w-auto"
           >
             {returning ? (
               "Saving..."
@@ -181,7 +181,7 @@ export default function BookCard({
     router.push("/members");
   }
 }}
-            className="min-h-10 rounded-xl border border-blue-200/80 bg-white/90 px-4 py-2 text-sm text-slate-900 transition-colors duration-150 hover:border-sky-400 focus-visible:border-sky-500 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-sky-400/70 dark:border-sky-400/25 dark:bg-slate-800/80 dark:text-slate-100 dark:hover:border-sky-400"
+            className="min-h-10 w-full rounded-xl border border-blue-200/80 bg-white/90 px-4 py-2 text-sm text-slate-900 transition-colors duration-150 hover:border-sky-400 focus-visible:border-sky-500 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-sky-400/70 dark:border-sky-400/25 dark:bg-slate-800/80 dark:text-slate-100 dark:hover:border-sky-400 sm:w-auto"
           >
             <option value="" className="bg-white text-slate-900 dark:bg-slate-800 dark:text-slate-100">
               Choose member
@@ -205,7 +205,7 @@ export default function BookCard({
           <button
             type="submit"
             disabled={lending}
-            className="min-h-10 rounded-xl bg-gradient-to-r from-sky-500 to-blue-600 px-4 py-2 text-sm font-semibold text-white shadow-[0_8px_18px_rgba(37,99,235,0.25)] transition duration-200 hover:-translate-y-0.5 hover:from-sky-400 hover:to-blue-500 hover:shadow-[0_12px_24px_rgba(37,99,235,0.35)] active:scale-95 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-sky-400 focus-visible:ring-offset-2 focus-visible:ring-offset-blue-900 disabled:cursor-not-allowed disabled:opacity-50"
+            className="min-h-10 w-full rounded-xl bg-gradient-to-r from-sky-500 to-blue-600 px-4 py-2 text-sm font-semibold text-white shadow-[0_8px_18px_rgba(37,99,235,0.25)] transition duration-200 hover:-translate-y-0.5 hover:from-sky-400 hover:to-blue-500 hover:shadow-[0_12px_24px_rgba(37,99,235,0.35)] active:scale-95 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-sky-400 focus-visible:ring-offset-2 focus-visible:ring-offset-blue-900 disabled:cursor-not-allowed disabled:opacity-50 sm:w-auto"
           >
             {lending ? "Saving..." : "Lend for 14 days"}
           </button>

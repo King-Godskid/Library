@@ -11,7 +11,7 @@ export default function AddBookForm() {
   return (
     <form
       action={formAction}
-      className="mb-8 space-y-4 rounded-2xl border border-white/80 bg-white/70 p-5 shadow-[0_12px_30px_rgba(30,64,110,0.12)] backdrop-blur-md transition duration-200 hover:border-sky-300 hover:shadow-[0_16px_36px_rgba(30,64,110,0.18)] dark:border-sky-400/20 dark:bg-slate-900/60 dark:shadow-black/20 dark:hover:border-sky-300/40"
+      className="mb-6 space-y-3 rounded-2xl border border-white/80 bg-white/70 p-4 shadow-[0_12px_30px_rgba(30,64,110,0.12)] backdrop-blur-md transition duration-200 hover:border-sky-300 hover:shadow-[0_16px_36px_rgba(30,64,110,0.18)] dark:border-sky-400/20 dark:bg-slate-900/60 dark:shadow-black/20 dark:hover:border-sky-300/40 sm:mb-8 sm:space-y-4 sm:p-5"
     >
       <h2 className="text-lg font-semibold text-slate-900 dark:text-slate-100">
         Add a book
@@ -37,7 +37,7 @@ export default function AddBookForm() {
       <button
         type="submit"
         disabled={pending}
-        className="min-h-10 rounded-xl bg-gradient-to-r from-sky-500 to-blue-600 px-5 py-2 font-semibold text-white shadow-[0_8px_18px_rgba(37,99,235,0.25)] transition duration-200 hover:-translate-y-0.5 hover:from-sky-400 hover:to-blue-500 hover:shadow-[0_12px_24px_rgba(37,99,235,0.35)] active:scale-95 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-sky-400 focus-visible:ring-offset-2 focus-visible:ring-offset-white disabled:cursor-not-allowed disabled:opacity-50 disabled:hover:translate-y-0 dark:focus-visible:ring-offset-slate-900"
+        className="min-h-10 w-full rounded-xl bg-gradient-to-r from-sky-500 to-blue-600 px-5 py-2 font-semibold text-white shadow-[0_8px_18px_rgba(37,99,235,0.25)] transition duration-200 hover:-translate-y-0.5 hover:from-sky-400 hover:to-blue-500 hover:shadow-[0_12px_24px_rgba(37,99,235,0.35)] active:scale-95 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-sky-400 focus-visible:ring-offset-2 focus-visible:ring-offset-white disabled:cursor-not-allowed disabled:opacity-50 disabled:hover:translate-y-0 dark:focus-visible:ring-offset-slate-900 sm:w-auto"
       >
         {pending ? "Saving..." : "Add book"}
       </button>

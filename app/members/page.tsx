@@ -10,7 +10,7 @@ async function MemberList() {
   `;
 
   return (
-    <ul className="space-y-4">
+    <ul className="space-y-3 sm:space-y-4">
       {members.map((member) => (
         <MemberCard
           key={member.id}
@@ -23,9 +23,9 @@ async function MemberList() {
 
 export default function MembersPage() {
   return (
-    <main className="mx-auto w-full max-w-2xl px-4 py-8 sm:px-6 sm:py-10">
+    <main className="mx-auto w-full max-w-2xl px-4 py-6 sm:px-6 sm:py-10">
       <Nav />
-      <h1 className="mb-7 text-3xl font-bold tracking-tight text-blue-950 dark:text-slate-100">
+      <h1 className="mb-5 text-2xl font-bold tracking-tight text-blue-950 dark:text-slate-100 sm:mb-7 sm:text-3xl">
         Members
       </h1>
       <AddMemberForm />
